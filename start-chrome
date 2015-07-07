@@ -5,7 +5,7 @@ function shutdown {
   wait $NODE_PID
 }
 
-xvfb-run -e /dev/stdout --server-args="+extension RANDR" /usr/bin/google-chrome --no-sandbox \
+xvfb-run -a -e /dev/stdout --server-args="+extension RANDR" /usr/bin/google-chrome --no-sandbox \
                                 --user-data-dir=/data \
                                 --no-first-run \
                                 --no-default-browser-check \
