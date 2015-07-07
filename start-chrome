@@ -1,9 +1,18 @@
 #!/bin/bash
 
-xvfb-run --server-args="+extension RANDR" /usr/bin/google-chrome --no-sandbox \
+function shutdown {
+  kill -s SIGTERM $NODE_PID
+  wait $NODE_PID
+}
+
+xvfb-run -e /dev/stdout --server-args="+extension RANDR" /usr/bin/google-chrome --no-sandbox \
                                 --user-data-dir=/data \
                                 --no-first-run \
                                 --no-default-browser-check \
                                 --use-fake-ui-for-media-stream \
                                 --use-fake-device-for-media-stream \
                                 $@
+
+NODE_PID=$!
+trap shutdown SIGTERM SIGINT
+wait $NODE_PID
